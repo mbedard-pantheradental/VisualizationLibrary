@@ -1369,7 +1369,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
               // In the future we'll want to eliminate all direct calls to glBindBuffer and similar an
               // go through the OpenGLContext that will lazily do everything.
               VL_glBindBuffer(GL_ARRAY_BUFFER, buf_obj); VL_CHECK_OGL();
-              glVertexPointer((int)vas->vertexArray()->glSize(), vas->vertexArray()->glType(), /*stride*/0, ptr); VL_CHECK_OGL();
+              glVertexPointer((int)vas->vertexArray()->glSize(), vas->vertexArray()->glType(), (GLsizei)vas->vertexArray()->stride(), ptr); VL_CHECK_OGL();
               mVertexArray.mPtr = ptr;
               mVertexArray.mBufferObject = buf_obj;
             }
@@ -1407,7 +1407,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
                 glEnableClientState(GL_NORMAL_ARRAY); VL_CHECK_OGL();
               }
               VL_glBindBuffer(GL_ARRAY_BUFFER, buf_obj); VL_CHECK_OGL(); 
-              glNormalPointer(vas->normalArray()->glType(), /*stride*/0, ptr); VL_CHECK_OGL();
+              glNormalPointer(vas->normalArray()->glType(), (GLsizei)vas->normalArray()->stride(), ptr); VL_CHECK_OGL();
               mNormalArray.mPtr = ptr;
               mNormalArray.mBufferObject = buf_obj;
             }
@@ -1449,7 +1449,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
                 glEnableClientState(GL_COLOR_ARRAY); VL_CHECK_OGL();
               }
               VL_glBindBuffer(GL_ARRAY_BUFFER, buf_obj); VL_CHECK_OGL();
-              glColorPointer((int)vas->colorArray()->glSize(), vas->colorArray()->glType(), /*stride*/0, ptr); VL_CHECK_OGL();
+              glColorPointer((int)vas->colorArray()->glSize(), vas->colorArray()->glType(), (GLsizei)vas->colorArray()->stride(), ptr); VL_CHECK_OGL();
               mColorArray.mPtr = ptr;
               mColorArray.mBufferObject = buf_obj;
             }
@@ -1491,7 +1491,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
                 glEnableClientState(GL_SECONDARY_COLOR_ARRAY); VL_CHECK_OGL();
               }
               VL_glBindBuffer(GL_ARRAY_BUFFER, buf_obj); VL_CHECK_OGL();
-              glSecondaryColorPointer((int)vas->secondaryColorArray()->glSize(), vas->secondaryColorArray()->glType(), /*stride*/0, ptr); VL_CHECK_OGL();
+              glSecondaryColorPointer((int)vas->secondaryColorArray()->glSize(), vas->secondaryColorArray()->glType(), (GLsizei)vas->secondaryColorArray()->stride(), ptr); VL_CHECK_OGL();
               mSecondaryColorArray.mPtr = ptr;
               mSecondaryColorArray.mBufferObject = buf_obj;
             }
@@ -1533,7 +1533,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
                 glEnableClientState(GL_FOG_COORD_ARRAY); VL_CHECK_OGL();
               }
               VL_glBindBuffer(GL_ARRAY_BUFFER, buf_obj); VL_CHECK_OGL();
-              glFogCoordPointer(vas->fogCoordArray()->glType(), /*stride*/0, ptr); VL_CHECK_OGL();
+              glFogCoordPointer(vas->fogCoordArray()->glType(), (GLsizei)vas->fogCoordArray()->stride(), ptr); VL_CHECK_OGL();
               mFogArray.mPtr = ptr;
               mFogArray.mBufferObject = buf_obj;
             }
@@ -1584,7 +1584,7 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
                 Log::error("OpenGL ES does not allow 1D texture coordinates.\n"); VL_TRAP();
               }
             #endif
-            glTexCoordPointer((int)texarr->glSize(), texarr->glType(), 0/*texarr->stride()*/, ptr/*+ texarr->offset()*/); VL_CHECK_OGL();
+            glTexCoordPointer((int)texarr->glSize(), texarr->glType(), (GLsizei)texarr->stride(), ptr/*+ texarr->offset()*/); VL_CHECK_OGL();
 
             // enable if not previously enabled
             if (mTexCoordArray[tex_unit].mState == 1)
@@ -1654,17 +1654,17 @@ void OpenGLContext::bindVAS(const IVertexAttribSet* vas, bool use_bo, bool force
 
           if ( info->interpretation() == VAI_NORMAL )
           {
-            VL_glVertexAttribPointer( idx, (int)info->data()->glSize(), info->data()->glType(), info->normalize(), /*stride*/0, ptr ); VL_CHECK_OGL();
+            VL_glVertexAttribPointer( idx, (int)info->data()->glSize(), info->data()->glType(), info->normalize(), (GLsizei)info->data()->stride(), ptr ); VL_CHECK_OGL();
           }
           else
           if ( info->interpretation() == VAI_INTEGER )
           {
-            VL_glVertexAttribIPointer( idx, (int)info->data()->glSize(), info->data()->glType(), /*stride*/0, ptr ); VL_CHECK_OGL();
+            VL_glVertexAttribIPointer( idx, (int)info->data()->glSize(), info->data()->glType(), (GLsizei)info->data()->stride(), ptr ); VL_CHECK_OGL();
           }
           else
           if ( info->interpretation() == VAI_DOUBLE )
           {
-            VL_glVertexAttribLPointer( idx, (int)info->data()->glSize(), info->data()->glType(), /*stride*/0, ptr ); VL_CHECK_OGL();
+            VL_glVertexAttribLPointer( idx, (int)info->data()->glSize(), info->data()->glType(), (GLsizei)info->data()->stride(), ptr ); VL_CHECK_OGL();
           }
 
           // enable if not previously enabled

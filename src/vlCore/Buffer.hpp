@@ -61,6 +61,7 @@ namespace vl
       mPtr = NULL;
       mByteCount = 0;
       mAlignment = VL_DEFAULT_BUFFER_BYTE_ALIGNMENT;
+      mStride = 0;
       mAllocationMode = AutoAllocatedBuffer;
     }
     Buffer(const Buffer& other): Object(other)
@@ -69,6 +70,7 @@ namespace vl
       mPtr = NULL;
       mByteCount = 0;
       mAlignment = VL_DEFAULT_BUFFER_BYTE_ALIGNMENT;
+      mStride = 0;
       mAllocationMode = AutoAllocatedBuffer;
       // copy local data
       *this = other;
@@ -79,6 +81,8 @@ namespace vl
       {
         // same alignment
         mAlignment = other.mAlignment;
+        // same stride
+        mStride = other.mStride;
         // make space for new data
         resize(other.bytesUsed());
         // copy new data
@@ -89,6 +93,7 @@ namespace vl
         VL_CHECK(mPtr);
         VL_CHECK(other.mPtr);
         VL_CHECK(mByteCount == other.mByteCount);
+        mStride = other.mStride;
         memcpy(mPtr, other.ptr(), bytesUsed());
       }
       return *this;
@@ -101,14 +106,17 @@ namespace vl
       unsigned char* tmp_ptr = mPtr;
       size_t tmp_byte_count = mByteCount;
       size_t tmp_alignment = mAlignment;
+      size_t tmp_stride = mStride;
       // this <- other
       mPtr = other.mPtr;
       mByteCount = other.mByteCount;
       mAlignment = other.mAlignment;
+      mStride = other.mStride;
       // this -> other
       other.mPtr = tmp_ptr;
       other.mByteCount = tmp_byte_count;
       other.mAlignment = tmp_alignment;
+      other.mStride = tmp_stride;
     }
 
     ~Buffer()
@@ -168,12 +176,13 @@ namespace vl
      * setAllocationMode( AutoAllocatedBuffer ) to revert to the default
      * behaviour.
      */
-    void setUserAllocatedBuffer(void* ptr, size_t bytes)
+    void setUserAllocatedBuffer(void* ptr, size_t bytes, size_t stride = 0)
     {
       clear();
       mPtr = (unsigned char*)ptr;
       mByteCount = bytes;
       mAlignment = 0;
+      mStride = stride;
       mAllocationMode = UserAllocatedBuffer;
     }
 
@@ -186,6 +195,7 @@ namespace vl
         // reset buffer data
         mPtr = 0;
         mByteCount = 0;
+        mStride = 0;
         mAlignment = 0;
       }
     }
@@ -193,6 +203,8 @@ namespace vl
     EAllocationMode allocationMode() const { return mAllocationMode; }
 
     size_t bytesUsed() const { return mByteCount; }
+
+    size_t stride() const { return mStride; }
 
     bool empty() const { return mByteCount == 0; }
 
@@ -263,6 +275,7 @@ namespace vl
     unsigned char* mPtr;
     size_t mByteCount;
     size_t mAlignment;
+    size_t mStride;
     EAllocationMode mAllocationMode;
   };
 

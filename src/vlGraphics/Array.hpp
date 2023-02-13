@@ -102,6 +102,9 @@ namespace vl
     //! Returns the amount of memory in bytes used by an array. Equivalent to bufferObject()->bytesUsed().
     virtual size_t bytesUsed() const { return bufferObject() ? bufferObject()->bytesUsed() : 0; }
 
+    //! Returns the stride in bytes of the data. Equivalent to bufferObject()->stride().
+    virtual size_t stride() const { return bufferObject() ? bufferObject()->stride() : 0; }
+
     //! Returns the number of scalar components for the array, ie 3 for ArrayFloat3, 1 for ArrayUInt1 etc.
     virtual size_t glSize() const = 0;
 
@@ -196,7 +199,7 @@ namespace vl
 
     virtual GLenum glType() const { return T_GL_Type; }
 
-    virtual size_t bytesPerVector() const { return sizeof(T_VectorType); }
+    virtual size_t bytesPerVector() const { return std::max(sizeof(T_VectorType), stride()); }
 
     // ---
 
