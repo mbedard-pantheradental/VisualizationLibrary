@@ -181,7 +181,7 @@
  * - minimum = 1
  * - maximum = OpenGL implementation dependent
  */
-#define VL_MAX_GENERIC_VERTEX_ATTRIB 8
+#define VL_MAX_GENERIC_VERTEX_ATTRIB 16
 
 
 /**
