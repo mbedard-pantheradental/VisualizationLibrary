@@ -208,7 +208,7 @@ namespace vl
 
     virtual void updateDirtyBufferObject(EBufferObjectUpdateMode mode)
     {
-      if (indexBuffer()->isBufferObjectDirty() || (mode & BUF_ForceUpdate))
+      if (indexBuffer() && (indexBuffer()->isBufferObjectDirty() || (mode & BUF_ForceUpdate)))
         indexBuffer()->updateBufferObject(mode);
     }
 
@@ -247,6 +247,9 @@ namespace vl
       }
       VL_CHECK(!error)
 #endif
+
+      if(!indexBuffer() || !indexBuffer()->bufferObject())
+        return;
 
       use_bo &= Has_BufferObject; // && indexBuffer()->bufferObject()->handle() && indexBuffer()->sizeBufferObject();
       if ( !use_bo && !indexBuffer()->size() )

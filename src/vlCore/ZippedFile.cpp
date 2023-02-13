@@ -35,6 +35,7 @@
 #include <vlCore/Say.hpp>
 #include <zlib.h>
 #include <stdio.h>
+#include <algorithm>
 
 using namespace vl;
 

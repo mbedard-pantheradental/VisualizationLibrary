@@ -165,7 +165,7 @@ namespace vl
 
     virtual bool hasNext() const 
     { 
-      return mCurPos != (int)mArray->size(); 
+      return mArray && mCurPos != (int)mArray->size(); 
     }
 
     virtual bool next() 

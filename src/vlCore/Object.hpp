@@ -282,11 +282,11 @@ namespace vl
       return *this;
     }
 
-    void swap(ref& other)
+    void swap(ref<T>& other)
     {
-      T* tmp = other.mObject;
+      ref<T> tmp = other.mObject;
       other = mObject; 
-      mObject = tmp;
+      *this = tmp.get();
     }
 
     //! This is mainly useful when using ref<> with std::map, std::set, etc.

@@ -290,7 +290,8 @@ void Rendering::fillRenderQueue( ActorCollection* actor_list )
   {
     Actor* actor = actor_list->at(iactor);
 
-    VL_CHECK(actor->lod(0))
+    if (!actor->lod(0))
+      continue;
 
     if ( !isEnabled(actor->enableMask()) )
       continue;
@@ -299,7 +300,8 @@ void Rendering::fillRenderQueue( ActorCollection* actor_list )
     actor->computeBounds();
 
     Effect* effect = actor->effect();
-    VL_CHECK(effect)
+    if (!effect)
+      continue;
 
     // effect override: select the first that matches
     
