@@ -1459,9 +1459,9 @@ namespace vl
   // --------------- not ---------------
 
 #if defined(_MSC_VER)
-  inline ivec2 not(const ivec2& a) { return ivec2( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1); }
-  inline ivec3 not(const ivec3& a) { return ivec3( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1, a.z() != 0 ? 0 : 1); }
-  inline ivec4 not(const ivec4& a) { return ivec4( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1, a.z() != 0 ? 0 : 1, a.w() != 0 ? 0 : 1 ); }
+  inline ivec2 ivec_not(const ivec2& a) { return ivec2( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1); }
+  inline ivec3 ivec_not(const ivec3& a) { return ivec3( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1, a.z() != 0 ? 0 : 1); }
+  inline ivec4 ivec_not(const ivec4& a) { return ivec4( a.x() != 0 ? 0 : 1, a.y() != 0 ? 0 : 1, a.z() != 0 ? 0 : 1, a.w() != 0 ? 0 : 1 ); }
 #endif
 }
 
